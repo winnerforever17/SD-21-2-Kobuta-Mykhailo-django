@@ -1,10 +1,10 @@
 import sqlite3
 from contextlib import closing
 
+
 def create_tables():
     with closing(sqlite3.connect("articles.db")) as connection:
         with closing(connection.cursor()) as c:
-            # Створення таблиці для статей
             c.execute('''
                 CREATE TABLE IF NOT EXISTS articles (
                     id INTEGER PRIMARY KEY,
@@ -13,6 +13,7 @@ def create_tables():
                 )
             ''')
 
+
 def add_article(title, text):
     with closing(sqlite3.connect("articles.db")) as connection:
         with closing(connection.cursor()) as c:
@@ -20,6 +21,7 @@ def add_article(title, text):
                 INSERT INTO articles (title, text) VALUES (?, ?)
             ''', (title, text))
             connection.commit()
+
 
 def view_articles():
     with closing(sqlite3.connect("articles.db")) as connection:
@@ -31,6 +33,7 @@ def view_articles():
             for article in articles:
                 print(article)
 
+
 def delete_article(article_id):
     with closing(sqlite3.connect("articles.db")) as connection:
         with closing(connection.cursor()) as c:
@@ -39,7 +42,7 @@ def delete_article(article_id):
             ''', (article_id,))
             connection.commit()
 
-# Створення таблиці при потребі
+
 create_tables()
 
 while True:
